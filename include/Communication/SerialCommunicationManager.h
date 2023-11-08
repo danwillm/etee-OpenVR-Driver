@@ -27,12 +27,6 @@ class SerialCommunicationManager : public ICommunicationManager {
 
  private:
   bool Connect();
-  bool SetCommunicationTimeout(
-      unsigned long readIntervalTimeout,
-      unsigned long readTotalTimeoutMultiplier,
-      unsigned long readTotalTimeoutConstant,
-      unsigned long writeTotalTimeoutMultiplier,
-      unsigned long WriteTotalTimeoutConstant);
   void ListenerThread();
   bool ReceiveNextPacket(std::string& buff);
   bool PurgeBuffer();

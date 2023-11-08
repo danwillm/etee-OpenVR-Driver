@@ -101,25 +101,6 @@ static std::string GetLastErrorAsString() {
   return message;
 }
 
-bool SerialCommunicationManager::SetCommunicationTimeout(
-    unsigned long ReadIntervalTimeout,
-    unsigned long ReadTotalTimeoutMultiplier,
-    unsigned long ReadTotalTimeoutConstant,
-    unsigned long WriteTotalTimeoutMultiplier,
-    unsigned long WriteTotalTimeoutConstant) {
-  COMMTIMEOUTS timeout;
-
-  timeout.ReadIntervalTimeout = MAXDWORD;
-  timeout.ReadTotalTimeoutConstant = 10;
-  timeout.ReadTotalTimeoutMultiplier = MAXDWORD;
-  timeout.WriteTotalTimeoutConstant = WriteTotalTimeoutConstant;
-  timeout.WriteTotalTimeoutMultiplier = WriteTotalTimeoutMultiplier;
-
-  if (!SetCommTimeouts(m_hSerial, &timeout)) return false;
-
-  return true;
-}
-
 bool SerialCommunicationManager::Connect() {
   // We're not yet connected
   m_isConnected = false;
@@ -164,11 +145,6 @@ bool SerialCommunicationManager::Connect() {
   // set the parameters and check for their proper application
   if (!SetCommState(m_hSerial, &dcbSerialParams)) {
     LogError("Failed to set serial parameters");
-    return false;
-  }
-
-  if (!SetCommunicationTimeout(MAXDWORD, MAXDWORD, 1000, 5, 0)) {
-    LogError("Failed to set communication timeout");
     return false;
   }
 
