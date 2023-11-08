@@ -150,9 +150,9 @@ bool SerialCommunicationManager::Connect() {
 
   COMMTIMEOUTS timeout;
   timeout.ReadIntervalTimeout = MAXDWORD;
-  timeout.ReadTotalTimeoutConstant = 1000;
-  timeout.ReadTotalTimeoutMultiplier = MAXDWORD;
-  timeout.WriteTotalTimeoutConstant = 50;
+  timeout.ReadTotalTimeoutConstant = 0;
+  timeout.ReadTotalTimeoutMultiplier = 0;
+  timeout.WriteTotalTimeoutConstant = 10;
   timeout.WriteTotalTimeoutMultiplier = 1;
   if (!SetCommTimeouts(m_hSerial, &timeout)) {
     LogError("Failed to set comm timeouts");
